@@ -25,7 +25,7 @@ class NewTodoForm extends Component {
         <label htmlFor='task'> Todo</label>
         <input
           type='text'
-          placeholder='Write'
+          placeholder='write'
           id='task'
           name='task'
           value={this.state.task}
