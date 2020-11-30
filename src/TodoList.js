@@ -37,7 +37,13 @@ class TodoList extends Component {
   toggleCompletion(id) {
     const updatedTodos = this.state.todos.map(todo => {
       if (todo.id === id) {
+        
+        // let data = localStorage.getItem('mydata');
+
+        // return {data};
+
         return { ...todo, completed: !todo.completed };
+
       }
       return todo;
     });

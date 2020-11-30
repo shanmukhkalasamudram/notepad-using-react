@@ -17,6 +17,7 @@ class NewTodoForm extends Component {
   handleSubmit(evt) {
     evt.preventDefault();
     this.props.createTodo({ ...this.state, id: uuid(), completed: false });
+    localStorage.setItem('Mydata',{ ...this.state, id: uuid(), completed: false })
     this.setState({ task: "" });
   }
   render() {
