@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import NewTodoForm from "./NewTodoForm";
 import Todo from "./Todo";
 import "./TodoList.css";
+import axios from "axios";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: []
+      todos: JSON.parse(window.localStorage.getItem("todos") || "[]"),
+      
     };
     this.create = this.create.bind(this);
     this.remove = this.remove.bind(this);
@@ -18,12 +20,21 @@ class TodoList extends Component {
   create(newTodo) {
     this.setState({
       todos: [...this.state.todos, newTodo]
-    });
+    },
+    () =>
+          window.localStorage.setItem("todos", JSON.stringify(this.state.todos))
+          );
   }
+
+
+
   remove(id) {
     this.setState({
       todos: this.state.todos.filter(t => t.id !== id)
-    });
+    }
+    ,
+    () =>
+          window.localStorage.setItem("todos", JSON.stringify(this.state.todos)));
   }
   update(id, updatedTask) {
     const updatedTodos = this.state.todos.map(todo => {
@@ -32,7 +43,9 @@ class TodoList extends Component {
       }
       return todo;
     });
-    this.setState({ todos: updatedTodos });
+    this.setState({ todos: updatedTodos },
+      () =>
+            window.localStorage.setItem("todos", JSON.stringify(this.state.todos)));
   }
   toggleCompletion(id) {
     const updatedTodos = this.state.todos.map(todo => {
@@ -47,7 +60,9 @@ class TodoList extends Component {
       }
       return todo;
     });
-    this.setState({ todos: updatedTodos });
+    this.setState({ todos: updatedTodos },
+      () =>
+            window.localStorage.setItem("todos", JSON.stringify(this.state.todos)));
   }
   render() {
     const todos = this.state.todos.map(todo => {
